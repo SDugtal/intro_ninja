@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intro Ninja - Master Your Introductions</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 25%, #2980b9 50%, #8e44ad 75%, #e74c3c 100%);
+            min-height: 100vh;
+            padding: 20px;
+            animation: gradientShift 10s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background: linear-gradient(135deg, #2c3e50 0%, #34495e 25%, #2980b9 50%, #8e44ad 75%, #e74c3c 100%); }
+            50% { background: linear-gradient(135deg, #8e44ad 0%, #e74c3c 25%, #2c3e50 50%, #34495e 75%, #2980b9 100%); }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .ninja-emoji {
+            font-size: 3.5rem;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        .header p {
+            font-size: 1.3rem;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+
+        .tagline {
+            font-size: 1rem;
+            opacity: 0.8;
+            margin-top: 5px;
+            font-style: italic;
+        }
+
+        .form-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 35px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+            margin-bottom: 30px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .form-group {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .form-group input {
+            flex: 1;
+            padding: 18px;
+            border: 2px solid #e1e5e9;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s;
+            background: rgba(255,255,255,0.9);
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #8e44ad;
+            box-shadow: 0 0 15px rgba(142, 68, 173, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .form-group button {
+            padding: 18px 35px;
+            background: linear-gradient(135deg, #8e44ad 0%, #e74c3c 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .form-group button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(142, 68, 173, 0.4);
+        }
+
+        .form-group button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 50px;
+            color: white;
+            font-size: 18px;
+        }
+
+        .spinner {
+            border: 4px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top: 4px solid white;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 25px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .results {
+            display: none;
+        }
+
+        .profile-header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 35px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .profile-pic {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid #8e44ad;
+            box-shadow: 0 5px 15px rgba(142, 68, 173, 0.3);
+        }
+
+        .profile-info h2 {
+            color: #2c3e50;
+            font-size: 2.2rem;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .profile-info p {
+            color: #7f8c8d;
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 25px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: transform 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card h3 {
+            color: #2c3e50;
+            font-size: 1.6rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 700;
+        }
+
+        .card-icon {
+            width: 28px;
+            height: 28px;
+            color: #8e44ad;
+        }
+
+        .summary {
+            color: #34495e;
+            line-height: 1.7;
+            margin-bottom: 25px;
+            font-size: 1.05rem;
+        }
+
+        .facts-list {
+            list-style: none;
+        }
+
+        .facts-list li {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 15px;
+            margin-bottom: 12px;
+            border-radius: 12px;
+            border-left: 5px solid #8e44ad;
+            transition: transform 0.2s;
+        }
+
+        .facts-list li:hover {
+            transform: translateX(5px);
+        }
+
+        .interests {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .interest-tag {
+            background: linear-gradient(135deg, #8e44ad 0%, #e74c3c 100%);
+            color: white;
+            padding: 10px 18px;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: transform 0.2s;
+            box-shadow: 0 3px 10px rgba(142, 68, 173, 0.3);
+        }
+
+        .interest-tag:hover {
+            transform: translateY(-2px);
+        }
+
+        .ice-breakers {
+            grid-column: 1 / -1;
+        }
+
+        .ice-breakers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 18px;
+        }
+
+        .ice-breaker-item {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 25px;
+            border-radius: 15px;
+            border-left: 5px solid #27ae60;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .ice-breaker-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(39, 174, 96, 0.2);
+        }
+
+        .ice-breaker-item::before {
+            content: "💬";
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.2rem;
+        }
+
+        .error {
+            background: rgba(248, 215, 218, 0.95);
+            color: #721c24;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+            border: 1px solid #f5c6cb;
+            backdrop-filter: blur(10px);
+        }
+
+        .back-btn {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 18px 35px;
+            border: 2px solid #8e44ad;
+            color: #8e44ad;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 25px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            backdrop-filter: blur(10px);
+        }
+
+        .back-btn:hover {
+            background: #8e44ad;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(142, 68, 173, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .results-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .form-group {
+                flex-direction: column;
+            }
+            
+            .header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .ninja-emoji {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>
+                <span class="ninja-emoji">🥷</span>
+                Intro Ninja
+            </h1>
+            <p>Master the art of perfect introductions</p>
+            <div class="tagline">Slice through awkward conversations with precision</div>
+        </div>
+
+        <div class="form-container">
+            <form id="iceForm">
+                <div class="form-group">
+                    <input type="text" name="name" id="name" placeholder="Enter a person's name (e.g., John Doe)" required>
+                    <button type="submit" id="submitBtn">🥷 Generate Intro</button>
+                </div>
+            </form>
+        </div>
+
+        <div id="loading" class="loading" style="display: none;">
+            <div class="spinner"></div>
+            <p>🥷 Ninja is analyzing the target... Preparing stealth introductions...</p>
+        </div>
+
+        <div id="error" class="error" style="display: none;"></div>
+
+        <div id="results" class="results">
+            <div class="profile-header">
+                <img id="profilePic" src="https://via.placeholder.com/120" alt="Profile Picture" class="profile-pic" style="display: none;">
+                <div class="profile-info">
+                    <h2 id="profileName"></h2>
+                    <p>🎯 Target Analysis Complete</p>
+                </div>
+            </div>
+
+            <div class="results-grid">
+                <div class="card">
+                    <h3>
+                        <svg class="card-icon" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
+                        </svg>
+                        Intel Report
+                    </h3>
+                    <div id="summary" class="summary"></div>
+                    <ul id="facts" class="facts-list"></ul>
+                </div>
+
+                <div class="card">
+                    <h3>
+                        <svg class="card-icon" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"></path>
+                        </svg>
+                        Target Interests
+                    </h3>
+                    <div id="interests" class="interests"></div>
+                </div>
+
+                <div class="card ice-breakers">
+                    <h3>
+                        <svg class="card-icon" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-.98L2 17l1.338-3.123C2.493 12.767 2 11.434 2 10c0-3.866 3.582-7 8-7s8 3.134 8 7zM7 9H5v2h2V9zm8 0h-2v2h2V9zM9 9h2v2H9V9z" clip-rule="evenodd"></path>
+                        </svg>
+                        Ninja Conversation Starters
+                    </h3>
+                    <div id="iceBreakers" class="ice-breakers-grid"></div>
+                </div>
+            </div>
+
+            <button class="back-btn" onclick="resetForm()">🥷 New Mission</button>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("iceForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            
+            const name = document.getElementById("name").value.trim();
+            const submitBtn = document.getElementById("submitBtn");
+            const loading = document.getElementById("loading");
+            const results = document.getElementById("results");
+            const error = document.getElementById("error");
+            
+            // Reset UI
+            results.style.display = "none";
+            error.style.display = "none";
+            loading.style.display = "block";
+            submitBtn.disabled = true;
+            submitBtn.textContent = "🥷 Analyzing...";
+            
+            try {
+                const response = await fetch("/process", {
+                    method: "POST",
+                    headers: { 
+                        "Content-Type": "application/x-www-form-urlencoded" 
+                    },
+                    body: new URLSearchParams({ name })
+                });
+                
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.error || `Server error: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                console.log("Received data:", data);
+                
+                loading.style.display = "none";
+                displayResults(data, name);
+                
+            } catch (err) {
+                console.error("Error:", err);
+                loading.style.display = "none";
+                error.style.display = "block";
+                error.textContent = `🥷 Mission failed: ${err.message}`;
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = "🥷 Generate Intro";
+            }
+        });
+        
+        function displayResults(data, name) {
+            const results = document.getElementById("results");
+            
+            document.getElementById("profileName").textContent = name;
+            
+            const profilePic = document.getElementById("profilePic");
+            if (data.picture_url && data.picture_url !== null && data.picture_url !== "") {
+                profilePic.src = data.picture_url;
+                profilePic.style.display = "block";
+            } else {
+                profilePic.style.display = "none";
+            }
+            
+            const summaryEl = document.getElementById("summary");
+            if (data.summary_and_facts && data.summary_and_facts.summary) {
+                summaryEl.textContent = data.summary_and_facts.summary;
+            } else {
+                summaryEl.textContent = "No intel available on this target.";
+            }
+            
+            const factsEl = document.getElementById("facts");
+            factsEl.innerHTML = "";
+            if (data.summary_and_facts && data.summary_and_facts.interesting_facts) {
+                data.summary_and_facts.interesting_facts.forEach(fact => {
+                    const li = document.createElement("li");
+                    li.textContent = fact;
+                    factsEl.appendChild(li);
+                });
+            }
+            
+            const interestsEl = document.getElementById("interests");
+            interestsEl.innerHTML = "";
+            if (data.interests && data.interests.interests && Array.isArray(data.interests.interests)) {
+                data.interests.interests.forEach(interest => {
+                    const span = document.createElement("span");
+                    span.className = "interest-tag";
+                    span.textContent = interest;
+                    interestsEl.appendChild(span);
+                });
+            } else {
+                interestsEl.innerHTML = "<p>No target interests identified.</p>";
+            }
+            
+            const iceBreakersEl = document.getElementById("iceBreakers");
+            iceBreakersEl.innerHTML = "";
+            if (data.ice_breakers && data.ice_breakers.ice_breakers && Array.isArray(data.ice_breakers.ice_breakers)) {
+                data.ice_breakers.ice_breakers.forEach(iceBreaker => {
+                    const div = document.createElement("div");
+                    div.className = "ice-breaker-item";
+                    div.textContent = iceBreaker;
+                    iceBreakersEl.appendChild(div);
+                });
+            } else {
+                iceBreakersEl.innerHTML = "<p>No ninja techniques available.</p>";
+            }
+            
+            results.style.display = "block";
+            results.scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        function resetForm() {
+            document.getElementById("results").style.display = "none";
+            document.getElementById("name").value = "";
+            document.getElementById("error").style.display = "none";
+        }
+    </script>
+</body>
+</html>
